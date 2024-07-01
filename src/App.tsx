@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { LoaderFunctionArgs } from "react-router-dom";
 import {
   Form,
@@ -6,18 +7,27 @@ import {
   RouterProvider,
   createBrowserRouter,
   redirect,
+  useNavigate,
   useActionData,
   useFetcher,
   useLocation,
+  useParams,
   useNavigation,
   useRouteLoaderData,
+  useRouteError,
 } from "react-router-dom";
 import { Heading } from "@components/typography/Heading";
 import { Home } from "@pages/home";
-import { Admin, LoginPopover } from "@pages/admin";
+import { Admin, LoginPopover, CredPopover } from "@pages/admin";
 
 import logo from "@assets/img/rootsid.png";
 import { fakeAuthProvider } from "./auth";
+
+function ErrorBoundary() {
+  const error = useRouteError();
+  // Uncaught ReferenceError: path is not defined
+  return <div>{error.data}</div>;
+}
 
 const router = createBrowserRouter([
   {
@@ -28,6 +38,8 @@ const router = createBrowserRouter([
       return { user: fakeAuthProvider.username };
     },
     Component: Main,
+    errorElement: <ErrorBoundary />,
+
     children: [
       {
         index: true,
@@ -63,6 +75,21 @@ export default function App() {
 }
 
 function Main() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const from = params.get("from");
+  const [isLoadingAuth, setLoadingAuth] = useState(false);
+
+  const requestCredential = async () => {
+    setLoadingAuth(true);
+    await fakeAuthProvider.signin("username");
+    setLoadingAuth(false);
+    console.log("from in", from);
+    navigate(from ?? "/");
+    // return redirect(from ?? "/");
+  };
+
   return (
     <main className="p-4">
       <div className="grid md:grid-cols-5">
@@ -73,9 +100,17 @@ function Main() {
               <img className="h-16 w-16" src={logo} alt="RootsID Logo" />
               <Heading>RootsID Watcher</Heading>
             </div>
-            <LoginPopover />
+            {fakeAuthProvider.isAuthenticated ? (
+              <CredPopover initialOpen />
+            ) : (
+              <LoginPopover
+                initialOpen={Boolean(from)}
+                requestCredential={requestCredential}
+                isLoading={isLoadingAuth}
+              />
+            )}
           </div>
-         
+
           {/* <AuthStatus /> */}
 
           {/* <ul>
@@ -185,11 +220,10 @@ function protectedLoader({ request }: LoaderFunctionArgs) {
   // If the user is not logged in and tries to access `/protected`, we redirect
   // them to `/login` with a `from` parameter that allows login to redirect back
   // to this page upon successful authentication
-  // if (!fakeAuthProvider.isAuthenticated) {
-  //   const params = new URLSearchParams();
-  //   params.set("from", new URL(request.url).pathname);
-  //   return redirect("/?" + params.toString());
-  // }
+  if (!fakeAuthProvider.isAuthenticated) {
+    const params = new URLSearchParams();
+    params.set("from", new URL(request.url).pathname);
+    return redirect("/?" + params.toString());
+  }
   return null;
 }
-

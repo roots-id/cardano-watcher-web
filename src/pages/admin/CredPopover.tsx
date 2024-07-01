@@ -1,15 +1,7 @@
-import { Button, Popover, Spinner } from "flowbite-react";
+import { Button, Popover } from "flowbite-react";
 import { HiOutlineCreditCard } from "react-icons/hi2";
 
-export function LoginPopover({
-  initialOpen,
-  requestCredential,
-  isLoading,
-}: {
-  initialOpen: boolean;
-  requestCredential: () => void;
-  isLoading: boolean;
-}) {
+export function CredPopover({ initialOpen }: { initialOpen: boolean }) {
   return (
     <Popover
       aria-labelledby="login-popover"
@@ -19,15 +11,22 @@ export function LoginPopover({
           <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
             <h3
               id="login-popover"
-              className="font-semibold text-gray-900 dark:text-white"
+              className="font-semibold text-gray-900 dark:text-white flex flex-row items-center"
             >
-              Authentication
+              <HiOutlineCreditCard className="mr-1 h-6 w-6" />
+              Credential Info
             </h3>
           </div>
-          <div className="px-3 py-2">
-            <p>Request signin to Signify Extension</p>
+          <div className="px-3 py-2 font-bold">
+            <p>Legal Entity Official Organizational Role vLEI Credential</p>
           </div>
-          <div className="px-3 py-2">
+          <div className="px-3 py-2 italic">
+            <p>
+              A vLEI Role Credential issued by a Qualified vLEI issuer to
+              official representatives of a Legal Entity
+            </p>
+          </div>
+          {/* <div className="px-3 py-2">
             <Button size="xs" onClick={requestCredential}>
               {isLoading ? (
                 <Spinner className="mr-1 h-4 w-4" />
@@ -36,7 +35,7 @@ export function LoginPopover({
               )}
               Request Credential
             </Button>
-          </div>
+          </div> */}
         </div>
       }
     >
