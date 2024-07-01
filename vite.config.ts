@@ -6,6 +6,8 @@ const srcDir = "/src";
 const assetsDir = srcDir + "/assets";
 const componentsDir = srcDir + "/components";
 const servicesDir = srcDir + "/services";
+const pagesDir = srcDir + "/pages";
+
 
 export default defineConfig({
   resolve: {
@@ -14,6 +16,7 @@ export default defineConfig({
       "@assets": assetsDir,
       "@components": componentsDir,
       "@services": servicesDir,
+      "@pages": pagesDir,
     },
   },
   plugins: [react()],

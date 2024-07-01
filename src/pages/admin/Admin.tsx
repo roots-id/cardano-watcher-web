@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Tabs, Button, Spinner } from "flowbite-react";
 import { HiUserCircle, HiKey } from "react-icons/hi";
 import { watcherService } from "@services/watcher/watcher";
+import { AidDrawer } from "./AidDrawer";
+import { WitnessDrawer } from "./WitnessDrawer";
 import { Identifiers } from "./Identifier";
 import { Witnesses } from "./Witness";
 
@@ -12,6 +14,15 @@ export function Admin() {
   const [identifiers, setIdentifiers] = useState<unknown>([]);
   const [witnesses, setWitnesses] = useState<unknown>([]);
 
+  const [openAidDrawer, setOpenAidDrawer] = useState(false);
+  const [openWitnessDrawer, setOpenWitnessDrawer] = useState(false);
+
+  const handleCloseAidDrawer = () => {
+    setOpenAidDrawer(false);
+  };
+  const handleCloseWitnessDrawer = () => {
+    setOpenWitnessDrawer(false);
+  };
   const fetchAdminData = async () => {
     if (activeTab === 0) {
       setIsLoadingWitness(true);
@@ -49,8 +60,14 @@ export function Admin() {
         ) : (
           <>
             <div className="w-full flex flex-row justify-end">
-              <Button size="xs">+ Add New</Button>
+              <Button onClick={() => setOpenWitnessDrawer(true)} size="xs">
+                + Add New
+              </Button>
             </div>
+            <WitnessDrawer
+              isOpen={openWitnessDrawer}
+              handleClose={handleCloseWitnessDrawer}
+            />
             <Witnesses data={witnesses} />
           </>
         )}
@@ -67,8 +84,14 @@ export function Admin() {
         ) : (
           <>
             <div className="w-full flex flex-row justify-end">
-              <Button size="xs">+ Add New</Button>
+              <Button size="xs" onClick={() => setOpenAidDrawer(true)}>
+                + Add New
+              </Button>
             </div>
+            <AidDrawer
+              isOpen={openAidDrawer}
+              handleClose={handleCloseAidDrawer}
+            />
             <Identifiers data={identifiers} />
           </>
         )}
