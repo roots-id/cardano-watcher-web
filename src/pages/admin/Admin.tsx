@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Tabs, Button, Spinner } from "flowbite-react";
-import { HiUserCircle, HiKey } from "react-icons/hi";
+import { HiOutlineUserGroup, HiKey } from "react-icons/hi";
 import { watcherService } from "@services/watcher/watcher";
 import { AidDrawer } from "./AidDrawer";
 import { WitnessDrawer } from "./WitnessDrawer";
@@ -51,7 +51,7 @@ export function Admin() {
       <Tabs.Item
         active={activeTab === 0}
         title="Witnesses"
-        icon={isLoadingWitness ? (Spinner as any) : HiUserCircle}
+        icon={isLoadingWitness ? (Spinner as any) : HiOutlineUserGroup}
       >
         {isLoadingWitness ? (
           <div className="flex flex-row justify-center">

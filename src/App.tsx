@@ -16,6 +16,7 @@ import {
   useRouteLoaderData,
   useRouteError,
 } from "react-router-dom";
+import { Button } from "flowbite-react";
 import { Heading } from "@components/typography/Heading";
 import { Home } from "@pages/home";
 import { Admin, LoginPopover, CredPopover } from "@pages/admin";
@@ -101,7 +102,10 @@ function Main() {
               <Heading>RootsID Watcher</Heading>
             </div>
             {fakeAuthProvider.isAuthenticated ? (
-              <CredPopover initialOpen />
+              <div className="flex flex-row gap-x-4">
+                <Link className=" hover:text-green-700 text-xs content-center font-bold" to="/admin">Admin</Link>
+                <CredPopover initialOpen />
+              </div>
             ) : (
               <LoginPopover
                 initialOpen={Boolean(from)}

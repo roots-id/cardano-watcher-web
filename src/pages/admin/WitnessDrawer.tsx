@@ -1,5 +1,5 @@
 import { Button, Drawer, Label, Checkbox, TextInput } from "flowbite-react";
-import { HiUserCircle } from "react-icons/hi2";
+import { HiOutlineUserGroup } from "react-icons/hi2";
 
 interface IAidDrawer {
   isOpen: boolean;
@@ -10,7 +10,7 @@ export function WitnessDrawer({ isOpen, handleClose }: IAidDrawer) {
   return (
     <>
       <Drawer open={isOpen} onClose={handleClose} position="right">
-        <Drawer.Header title="Create Witness" titleIcon={HiUserCircle} />
+        <Drawer.Header title="Create Witness" titleIcon={HiOutlineUserGroup} />
         <Drawer.Items>
           <form action="#">
             <div className="mb-6 mt-3">

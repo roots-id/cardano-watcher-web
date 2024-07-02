@@ -1,5 +1,5 @@
 import { Button, Popover } from "flowbite-react";
-import { HiOutlineCreditCard } from "react-icons/hi2";
+import { HiOutlineCreditCard, HiUserCircle } from "react-icons/hi2";
 
 export function CredPopover({ initialOpen }: { initialOpen: boolean }) {
   return (
@@ -26,21 +26,11 @@ export function CredPopover({ initialOpen }: { initialOpen: boolean }) {
               official representatives of a Legal Entity
             </p>
           </div>
-          {/* <div className="px-3 py-2">
-            <Button size="xs" onClick={requestCredential}>
-              {isLoading ? (
-                <Spinner className="mr-1 h-4 w-4" />
-              ) : (
-                <HiOutlineCreditCard className="mr-1 h-4 w-4" />
-              )}
-              Request Credential
-            </Button>
-          </div> */}
         </div>
       }
     >
-      <Button outline size="xs">
-        Admin
+      <Button size="xs">
+        <HiUserCircle className="h-4 w-4" />
       </Button>
     </Popover>
   );
