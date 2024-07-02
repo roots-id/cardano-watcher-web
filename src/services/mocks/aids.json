@@ -1,0 +1,30 @@
+[
+  {
+    "prefix": "EJoYdiLHxt-q2RXNoAmIml3es8sCQvnsDxDysONWWVts",
+    "alias": "EJoYdiLHxt-q2RXNoAmIml3es8sCQvnsDxDysONWWVts",
+    "cardano": true,
+    "watched": true,
+    "oobi": "NA"
+  },
+  {
+    "alias": "rodolfo-aid",
+    "prefix": "ENXiaO-jdN1OZaJfnsOL6_maeHaVCFk0A7S2dljBf07M",
+    "oobi": "http://127.0.0.1:5642/oobi/ENXiaO-jdN1OZaJfnsOL6_maeHaVCFk0A7S2dljBf07M/witness/BHI7yViNOGWd1X0aKMgxLm4dUgbQDYoCFSJM2U8Hb3cx",
+    "watched": true,
+    "cardano": false
+  },
+  {
+    "prefix": "EGLdgA3r0jsTUWBOiEqv5eIywcbSQN3oznyoMOCx1Z8p",
+    "alias": "EGLdgA3r0jsTUWBOiEqv5eIywcbSQN3oznyoMOCx1Z8p",
+    "cardano": true,
+    "watched": true,
+    "oobi": "NA"
+  },
+  {
+    "prefix": "EC12CJHxS0Dys74Uko2vFUMxXULPx3WcLoIIQzOFsnMH",
+    "alias": "EC12CJHxS0Dys74Uko2vFUMxXULPx3WcLoIIQzOFsnMH",
+    "cardano": true,
+    "watched": true,
+    "oobi": "NA"
+  }
+]
