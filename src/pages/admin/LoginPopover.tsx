@@ -1,5 +1,5 @@
 import { Button, Popover, Spinner } from "flowbite-react";
-import { HiOutlineCreditCard } from "react-icons/hi2";
+import { HiOutlineCreditCard, HiUserCircle } from "react-icons/hi2";
 
 export function LoginPopover({
   initialOpen,
@@ -34,14 +34,14 @@ export function LoginPopover({
               ) : (
                 <HiOutlineCreditCard className="mr-1 h-4 w-4" />
               )}
-              Request Credential
+              Request ID
             </Button>
           </div>
         </div>
       }
     >
-      <Button outline size="xs">
-        Admin
+      <Button size="xs">
+        <HiUserCircle className="h-4 w-4" />
       </Button>
     </Popover>
   );
