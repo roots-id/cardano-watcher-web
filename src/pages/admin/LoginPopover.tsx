@@ -1,14 +1,17 @@
 import { Button, Popover, Spinner } from "flowbite-react";
 import { HiOutlineCreditCard, HiUserCircle } from "react-icons/hi2";
+import { MdExtensionOff } from "react-icons/md";
 
 export function LoginPopover({
   initialOpen,
   requestCredential,
   isLoading,
+  installedExt,
 }: {
   initialOpen: boolean;
   requestCredential: () => void;
   isLoading: boolean;
+  installedExt?: string;
 }) {
   return (
     <Popover
@@ -24,19 +27,33 @@ export function LoginPopover({
               Authentication
             </h3>
           </div>
-          <div className="px-3 py-2">
-            <p>Request signin to Signify Extension</p>
-          </div>
-          <div className="px-3 py-2">
-            <Button size="xs" onClick={requestCredential}>
-              {isLoading ? (
-                <Spinner className="mr-1 h-4 w-4" />
-              ) : (
-                <HiOutlineCreditCard className="mr-1 h-4 w-4" />
-              )}
-              Request ID
-            </Button>
-          </div>
+
+          {installedExt ? (
+            <>
+              <div className="px-3 py-2">
+                <p>Request signin to Signify Extension</p>
+              </div>
+              <div className="px-3 py-2">
+                <Button size="xs" onClick={requestCredential}>
+                  {isLoading ? (
+                    <Spinner className="mr-1 h-4 w-4" />
+                  ) : (
+                    <HiOutlineCreditCard className="mr-1 h-4 w-4" />
+                  )}
+                  Request ID
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="px-3 py-2 flex justify-center">
+                <MdExtensionOff className="h-16 w-16" />
+              </div>
+              <div className="px-3 py-2">
+                <p>Install a secure extension to communicate</p>
+              </div>
+            </>
+          )}
         </div>
       }
     >
