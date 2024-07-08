@@ -106,7 +106,7 @@ function Main() {
                 >
                   Admin
                 </Link>
-                <CredPopover initialOpen prefix={authProvider?.username} />
+                <CredPopover initialOpen prefix={authProvider?.aid} />
               </div>
             ) : (
               <LoginPopover
