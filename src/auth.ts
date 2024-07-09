@@ -1,24 +1,21 @@
 interface AuthProvider {
   isAuthenticated: boolean;
-  username: null | string;
-  signin(username: string): Promise<void>;
+  aid: null | string;
+  signin(aid: string): Promise<void>;
   signout(): Promise<void>;
 }
 
-/**
- * This represents some generic auth provider API, like Firebase.
- */
-export const fakeAuthProvider: AuthProvider = {
+export const authProvider: AuthProvider = {
   isAuthenticated: false,
-  username: null,
-  async signin(username: string) {
-    await new Promise((r) => setTimeout(r, 3000)); // fake delay
-    fakeAuthProvider.isAuthenticated = true;
-    fakeAuthProvider.username = username;
+  aid: null,
+  async signin(aid: string) {
+    if (!aid) return;
+
+    authProvider.isAuthenticated = true;
+    authProvider.aid = aid;
   },
   async signout() {
-    await new Promise((r) => setTimeout(r, 500)); // fake delay
-    fakeAuthProvider.isAuthenticated = false;
-    fakeAuthProvider.username = "";
+    authProvider.isAuthenticated = false;
+    authProvider.aid = null;
   },
 };

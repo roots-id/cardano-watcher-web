@@ -1,0 +1,51 @@
+header,
+details,
+code {
+    outline: 1px solid rgb(229 231 235);
+    border-radius: .5rem;
+    padding: 1em;
+}
+
+details {
+    margin-top: 1em;
+}
+
+summary:hover {
+    cursor: pointer;
+}
+
+summary:focus-visible {
+    outline: unset;
+}
+
+details:has(>summary:hover) {
+    outline-width: 2px;
+}
+
+details:has(>summary:focus-within) {
+    outline-width: 2px;
+}
+
+textarea {
+    word-break: break-all;
+}
+
+section.value>code {
+    margin-top: 1em;
+    padding: 0.5em;
+    display: block;
+    white-space: pre;
+    font-family: monospace;
+    overflow: hidden;
+    background-color: whitesmoke;
+}
+
+
+div#status {
+    display: none;
+}
+
+div.error#status {
+    display: unset;
+    color: red;
+}

@@ -1,7 +1,13 @@
 import { Button, Popover } from "flowbite-react";
 import { HiOutlineCreditCard, HiUserCircle } from "react-icons/hi2";
 
-export function CredPopover({ initialOpen }: { initialOpen: boolean }) {
+export function CredPopover({
+  initialOpen,
+  prefix,
+}: {
+  initialOpen: boolean;
+  prefix: string;
+}) {
   return (
     <Popover
       aria-labelledby="login-popover"
@@ -14,17 +20,14 @@ export function CredPopover({ initialOpen }: { initialOpen: boolean }) {
               className="font-semibold text-gray-900 dark:text-white flex flex-row items-center"
             >
               <HiOutlineCreditCard className="mr-1 h-6 w-6" />
-              Credential Info
+              Profile Info
             </h3>
           </div>
-          <div className="px-3 py-2 font-bold">
-            <p>Legal Entity Official Organizational Role vLEI Credential</p>
+          <div className="px-3 font-bold">
+            <p>AID</p>
           </div>
-          <div className="px-3 py-2 italic">
-            <p>
-              A vLEI Role Credential issued by a Qualified vLEI issuer to
-              official representatives of a Legal Entity
-            </p>
+          <div className="px-3 pb-2 break-words italic">
+            <p>{prefix}</p>
           </div>
         </div>
       }
