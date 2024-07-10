@@ -45,7 +45,7 @@ export function KELQuery() {
           <input
             name="prefix"
             placeholder="Enter AID prefix to query..."
-            className="px-4 py-3 border-gray-200 border rounded-lg w-full"
+            className="px-4 py-3 text-textColor border border-cardColor bg-cardBg rounded-lg w-full focus:border-primary focus:outline-none focus:ring-0"
             value={prefix}
             onChange={(e) => setPrefix(e.target.value)}
             onKeyUp={handleURIKeyPress}
@@ -54,7 +54,6 @@ export function KELQuery() {
         <Button
           isProcessing={isLoading}
           name="fetch"
-          color="dark"
           onClick={queryKEL}
         >
           {isLoading ? "..." : "Query"}
@@ -62,7 +61,7 @@ export function KELQuery() {
       </div>
       <div>
         {kelReports.map((report, idx) => (
-          <Card key={idx} className=" my-4">
+          <Card className="bg-cardBg hover:bg-cardBg text-cardColor border-cardColor my-4" key={idx} >
             <DecodedKEL kel={report.kel} />
           </Card>
         ))}

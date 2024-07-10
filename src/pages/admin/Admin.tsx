@@ -45,7 +45,7 @@ export function Admin() {
   return (
     <Tabs
       aria-label="Default tabs"
-      variant="default"
+      variant="underline"
       onActiveTabChange={setActiveTab}
     >
       <Tabs.Item
@@ -59,7 +59,7 @@ export function Admin() {
           </div>
         ) : (
           <>
-            <div className="w-full flex flex-row justify-end">
+            <div className="w-full flex flex-row justify-end p-2">
               <Button onClick={() => setOpenWitnessDrawer(true)} size="xs">
                 + Add New
               </Button>
@@ -83,7 +83,7 @@ export function Admin() {
           </div>
         ) : (
           <>
-            <div className="w-full flex flex-row justify-end">
+            <div className="w-full flex flex-row justify-end p-2">
               <Button size="xs" onClick={() => setOpenAidDrawer(true)}>
                 + Add New
               </Button>

@@ -9,46 +9,88 @@ interface IAidDrawer {
 export function AidDrawer({ isOpen, handleClose }: IAidDrawer) {
   return (
     <>
-      <Drawer open={isOpen} onClose={handleClose} position="right">
-        <Drawer.Header title="Create AID" titleIcon={HiKey} />
+      <Drawer
+        className="bg-cardBg border-l border-t border-b border-cardColor"
+        open={isOpen}
+        onClose={handleClose}
+        position="right"
+      >
+        <Drawer.Header
+          theme={{
+            inner: {
+              titleText:
+                "mb-4 inline-flex items-center text-base font-semibold text-cardColor",
+            },
+          }}
+          title="Create AID"
+          titleIcon={HiKey}
+        />
         <Drawer.Items>
           <form action="#">
             <div className="mb-6 mt-3">
-              <Label htmlFor="alias" className="mb-2 block">
+              <label
+                className="mb-2 block text-sm font-medium text-textColor"
+                htmlFor="alias"
+              >
                 Alias
-              </Label>
-              <TextInput
+              </label>
+              <input
                 id="alias"
                 name="alias"
+                className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary"
                 placeholder="Enter alias for identifier"
                 type="text"
               />
             </div>
             <div className="mb-6">
-              <Label htmlFor="prefix" className="mb-2 block">
+              <label
+                htmlFor="prefix"
+                className="mb-2 block text-sm font-medium text-textColor"
+              >
                 Prefix
-              </Label>
-              <TextInput
+              </label>
+              <input
                 id="prefix"
                 name="prefix"
-                value="ENXiaO-jdN1OZaJfnsOL6_maeHaVCFk0A7S2dljBf07M"
+                value="BOUZ4v-vPMP5KyZQP-d_8B30UHI4KWgXczBgWcRJnnYd"
+                className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 disabled
                 placeholder="Enter prefix"
+                type="text"
               />
             </div>
             <div className="mb-6">
-              <Label htmlFor="oobi" className="mb-2 block">
+              <label
+                htmlFor="oobi"
+                className="mb-2 block text-sm font-medium text-textColor"
+              >
                 OOBI
-              </Label>
-              <TextInput id="oobi" name="oobi" placeholder="Enter OOBI url" />
+              </label>
+              <input
+                id="oobi"
+                name="oobi"
+                className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder="Enter OOBI url"
+                type="text"
+              />
             </div>
             <div className="mb-6 flex items-center gap-2">
               <Checkbox id="watched" />
-              <Label htmlFor="watched">Watched?</Label>
+              <label
+                className="text-sm font-medium text-textColor"
+                htmlFor="watched"
+              >
+                Watched?
+              </label>
             </div>
             <div className="mb-6 flex items-center gap-2">
               <Checkbox id="cardano" />
-              <Label htmlFor="cardano">Cardano?</Label>
+              <label
+                className="text-sm font-medium text-textColor"
+                htmlFor="cardano"
+              >
+                Cardano?
+              </label>
             </div>
             <div className="mb-6">
               <Button type="submit" className="w-full">

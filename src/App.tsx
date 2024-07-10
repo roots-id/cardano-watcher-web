@@ -96,12 +96,18 @@ function Main() {
             <div />
             <div className="flex flex-row gap-x-2 items-center">
               <img className="h-16 w-16" src={logo} alt="RootsID Logo" />
-              <Heading>RootsID Watcher</Heading>
+              <Heading className="text-textColor">RootsID Watcher</Heading>
             </div>
             {authProvider.isAuthenticated ? (
               <div className="flex flex-row gap-x-4">
                 <Link
-                  className=" hover:text-green-700 text-xs content-center font-bold"
+                  className=" hover:text-cardColor text-textColor text-xs content-center font-bold"
+                  to="/"
+                >
+                  Home
+                </Link>
+                <Link
+                  className=" hover:text-cardColor text-textColor text-xs content-center font-bold"
                   to="/admin"
                 >
                   Admin

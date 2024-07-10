@@ -5,21 +5,21 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 export function Identifiers({ data }) {
   return (
     <div className="overflow-x-auto">
-      <Table className="table-fixed">
+      <Table className="table-fixed bg-cardBg">
         <Table.Head>
-          <Table.HeadCell>Alias</Table.HeadCell>
-          <Table.HeadCell>Prefix</Table.HeadCell>
-          <Table.HeadCell>Cardano</Table.HeadCell>
-          <Table.HeadCell>Watched</Table.HeadCell>
-          <Table.HeadCell>OOBI</Table.HeadCell>
-          <Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">Alias</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">Prefix</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">Cardano</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">Watched</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">OOBI</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {data.map((item) => (
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="overflow-auto font-medium text-gray-900 ">
+            <Table.Row className="bg-cardBody text-textColor dark:border-gray-700 dark:bg-gray-800">
+              <Table.Cell className="overflow-auto font-medium ">
                 {item.alias}
               </Table.Cell>
               <Table.Cell className="overflow-auto">{item.prefix}</Table.Cell>

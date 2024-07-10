@@ -64,7 +64,7 @@ export function DecodedKEL({ kel }: { kel: string }) {
         <textarea
           name="kel"
           rows={12}
-          className="rounded-lg border-gray-200 border w-full"
+          className="rounded-lg border-cardColor bg-bodyBg text-textColor border w-full"
           value={kel}
           disabled
         ></textarea>
