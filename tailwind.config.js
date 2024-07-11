@@ -30,7 +30,7 @@ export default {
         black: "#000",
         white: "#FFF",
         
-        primary: "#6806b0",
+        primary: "#0e7490",
         textColor: "#e5e5e5",
         cardColor: "#FFC197",
         cardBg: "#380c41",
