@@ -1,4 +1,4 @@
-import { Button, Drawer, Label, Checkbox, TextInput } from "flowbite-react";
+import { Button, Drawer, TextInput } from "flowbite-react";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 
 interface IAidDrawer {
@@ -9,57 +9,101 @@ interface IAidDrawer {
 export function WitnessDrawer({ isOpen, handleClose }: IAidDrawer) {
   return (
     <>
-      <Drawer open={isOpen} onClose={handleClose} position="right">
-        <Drawer.Header title="Create Witness" titleIcon={HiOutlineUserGroup} />
+      <Drawer
+        className="bg-cardBg border-l border-t border-b  border-cardColor"
+        open={isOpen}
+        onClose={handleClose}
+        position="right"
+      >
+        <Drawer.Header
+          theme={{
+            inner: {
+              titleText:
+                "mb-4 inline-flex items-center text-base font-semibold text-cardColor",
+            },
+          }}
+          title="Create Witness"
+          titleIcon={HiOutlineUserGroup}
+        />
         <Drawer.Items>
           <form action="#">
             <div className="mb-6 mt-3">
-              <Label htmlFor="alias" className="mb-2 block">
+              <label
+                className="mb-2 block text-sm font-medium text-textColor"
+                htmlFor="alias"
+              >
                 Alias
-              </Label>
-              <TextInput
+              </label>
+              <input
                 id="alias"
                 name="alias"
-                placeholder="Enter alias for identifier"
+                className="text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary focus:outline-none focus:ring-0"
+                placeholder="Enter alias for witness"
                 type="text"
               />
             </div>
             <div className="mb-6">
-              <Label htmlFor="prefix" className="mb-2 block">
+              <label
+                htmlFor="prefix"
+                className="mb-2 block text-sm font-medium text-textColor"
+              >
                 Prefix
-              </Label>
-              <TextInput
+              </label>
+              <input
                 id="prefix"
                 name="prefix"
                 value="BOUZ4v-vPMP5KyZQP-d_8B30UHI4KWgXczBgWcRJnnYd"
+                className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 disabled
                 placeholder="Enter prefix"
+                type="text"
               />
+              
             </div>
             <div className="mb-6">
-              <Label htmlFor="oobi" className="mb-2 block">
+              <label
+                htmlFor="oobi"
+                className="mb-2 block text-sm font-medium text-textColor"
+              >
                 OOBI
-              </Label>
-              <TextInput id="oobi" name="oobi" placeholder="Enter OOBI url" />
+              </label>
+              <input
+                id="oobi"
+                name="oobi"
+                className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder="Enter OOBI url"
+                type="text"
+              />
+              
             </div>
             <div className="mb-6">
-              <Label htmlFor="provider" className="mb-2 block">
+              <label
+                htmlFor="provider"
+                className="mb-2 block text-sm font-medium text-textColor"
+              >
                 Provider
-              </Label>
-              <TextInput
+              </label>
+              <input
                 id="provider"
                 name="provider"
+                className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Enter provider name"
+                type="text"
               />
             </div>
             <div className="mb-6">
-              <Label htmlFor="referral" className="mb-2 block">
+              <label
+                htmlFor="referral"
+                className="mb-2 block text-sm font-medium text-textColor"
+              >
                 Referral
-              </Label>
-              <TextInput
+              </label>
+              <input
                 id="referral"
                 name="referral"
+                className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Has anyone referred you?"
+                type="text"
               />
             </div>
             <div className="mb-6">

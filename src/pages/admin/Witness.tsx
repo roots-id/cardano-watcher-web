@@ -3,17 +3,17 @@ import { Table } from "flowbite-react";
 export function Witnesses({ data }) {
   return (
     <div className="overflow-x-auto">
-      <Table className="table-fixed">
+      <Table className="table-fixed bg-cardBg">
         <Table.Head>
-          <Table.HeadCell>Alias</Table.HeadCell>
-          <Table.HeadCell>Prefix</Table.HeadCell>
-          <Table.HeadCell>OOBI</Table.HeadCell>
-          <Table.HeadCell>Provider</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">Alias</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">Prefix</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">OOBI</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">Provider</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {data.map((item) => (
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="overflow-auto whitespace-nowrap font-medium text-gray-900 dark:text-white">
+            <Table.Row className="bg-cardBody text-textColor dark:border-gray-700 dark:bg-gray-800">
+              <Table.Cell className="overflow-auto whitespace-nowrap font-medium  dark:text-white">
                 {item.alias}
               </Table.Cell>
               <Table.Cell className="overflow-auto">{item.prefix}</Table.Cell>

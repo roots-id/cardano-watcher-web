@@ -11,9 +11,9 @@ interface IMetricCard {
 
 function MetricCard({ title, count, progress, loading }: IMetricCard) {
   return (
-    <Card href="#">
+    <Card className="bg-cardBg hover:bg-cardBg text-cardColor border-cardColor">
       <div className="flex flex-row justify-between items-center">
-        <h5 className="text-sm font-bold tracking-tight text-gray-600">
+        <h5 className="text-sm font-bold tracking-tight text-textColor">
           {title}
         </h5>
 

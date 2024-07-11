@@ -5,7 +5,7 @@ export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./public/**/*.html",
-    flowbite.content()
+    flowbite.content(),
   ],
   theme: {
     screens: {
@@ -29,6 +29,13 @@ export default {
         bg: "#f6f6f6",
         black: "#000",
         white: "#FFF",
+        
+        primary: "#0e7490",
+        textColor: "#e5e5e5",
+        cardColor: "#FFC197",
+        cardBg: "#380c41",
+        bodyBg: "#0e0828",
+
         grey: "#fbfbfb",
         grey100: "#f2f2f2",
         grey150: "#edeff0",
