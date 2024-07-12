@@ -1,8 +1,8 @@
-import { Table } from "flowbite-react";
+import { Table, Button } from "flowbite-react";
 import { HiCheckCircle } from "react-icons/hi";
 import { IoCloseCircleSharp } from "react-icons/io5";
 
-export function IdentifierTable({ data }) {
+export function IdentifierTable({ data, handleEdit }) {
   return (
     <div className="overflow-x-auto">
       <Table className="table-fixed bg-cardBg">
@@ -49,12 +49,13 @@ export function IdentifierTable({ data }) {
               </Table.Cell>
               <Table.Cell className="overflow-auto">{item.oobi}</Table.Cell>
               <Table.Cell>
-                <a
-                  href="#"
-                  className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                <Button
+                  size="xs"
+                  onClick={() => handleEdit(item)}
+                  className="font-medium hover:underline "
                 >
                   Edit
-                </a>
+                </Button>
               </Table.Cell>
             </Table.Row>
           ))}

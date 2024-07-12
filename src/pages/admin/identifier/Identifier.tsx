@@ -1,15 +1,34 @@
 import { useState } from "react";
 import { Button, Spinner } from "flowbite-react";
+import { watcherService } from "@services/watcher/watcher";
 import { IdentifierDrawer } from "./IdentifierDrawer";
 import { IdentifierTable } from "./IdentifierTable";
 
 export function Identifier({ isLoading, identifiers, onSuccess }) {
-  const [openAidDrawer, setOpenAidDrawer] = useState(false);
+  const [openIdentifierDrawer, setOpenIdentifierDrawer] = useState(false);
   const [selectedIdentifier, setSelectedIdentifier] = useState(null);
   const [isUpdatingIdentifier, setIsUpdatingIdentifier] = useState(false);
 
-  const handleCloseAidDrawer = () => {
-    setOpenAidDrawer(false);
+  const handleCloseIdentifierDrawer = () => {
+    setSelectedIdentifier(null);
+    setOpenIdentifierDrawer(false);
+  };
+
+  const handleEditIdentifier = (item) => {
+    setSelectedIdentifier(item);
+    setOpenIdentifierDrawer(true);
+  };
+
+  const handleSubmit = async (item) => {
+    setIsUpdatingIdentifier(true);
+    if (item?.prefix) {
+      await watcherService.updateIdentifier(item);
+    } else {
+      await watcherService.createIdentifier(item);
+    }
+    setIsUpdatingIdentifier(false);
+    handleCloseIdentifierDrawer();
+    onSuccess();
   };
 
   return isLoading ? (
@@ -19,15 +38,19 @@ export function Identifier({ isLoading, identifiers, onSuccess }) {
   ) : (
     <>
       <div className="w-full flex flex-row justify-end p-2">
-        <Button size="xs" onClick={() => setOpenAidDrawer(true)}>
+        <Button size="xs" onClick={() => setOpenIdentifierDrawer(true)}>
           + Add New
         </Button>
       </div>
       <IdentifierDrawer
-        isOpen={openAidDrawer}
-        handleClose={handleCloseAidDrawer}
+        isOpen={openIdentifierDrawer}
+        handleClose={handleCloseIdentifierDrawer}
+        identifier={selectedIdentifier}
+        mode={selectedIdentifier ? "edit" : "create"}
+        handleSubmit={handleSubmit}
+        isUpdating={isUpdatingIdentifier}
       />
-      <IdentifierTable data={identifiers} />
+      <IdentifierTable data={identifiers} handleEdit={handleEditIdentifier} />
     </>
   );
 }

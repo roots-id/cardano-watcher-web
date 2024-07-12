@@ -35,6 +35,7 @@ export interface IWitnessDto {
   oobi: string;
 }
 
+const TIMEOUT = 1000;
 const witnessesData = [...witnessesMock];
 const identifierData = [...identifiersMock];
 
@@ -43,7 +44,7 @@ export class WatcherService {
     return new Promise((resolve) => {
       setTimeout(() => {
         return resolve(statsMock);
-      }, 4000);
+      }, TIMEOUT);
     });
   }
 
@@ -51,7 +52,7 @@ export class WatcherService {
     return new Promise((resolve) => {
       setTimeout(() => {
         return resolve(kelMock);
-      }, 4000);
+      }, TIMEOUT);
     });
   }
 
@@ -59,15 +60,41 @@ export class WatcherService {
     return new Promise((resolve) => {
       setTimeout(() => {
         return resolve(identifierData);
-      }, 4000);
+      }, TIMEOUT);
     });
   }
 
-  async createIdentifier() {
+  async createIdentifier({ alias, watched, cardano, oobi }: IIdentifierDto) {
     return new Promise((resolve) => {
       setTimeout(() => {
+        const _identifier = {
+          alias,
+          oobi,
+          watched,
+          cardano,
+          prefix: window.crypto.randomUUID(),
+        };
+        identifierData.push(_identifier);
+        return resolve(_identifier);
+      }, TIMEOUT);
+    });
+  }
+
+  async updateIdentifier(identifier: IIdentifierDto) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const _index = identifierData.findIndex(
+          (id) => id.prefix === identifier.prefix
+        );
+        if (_index > -1) {
+          identifierData[_index] = {
+            ...identifierData[_index],
+            ...identifier,
+            prefix: identifierData[_index].prefix,
+          };
+        }
         return resolve(identifierData);
-      }, 4000);
+      }, TIMEOUT);
     });
   }
 
@@ -75,7 +102,7 @@ export class WatcherService {
     return new Promise((resolve) => {
       setTimeout(() => {
         return resolve(witnessesData);
-      }, 4000);
+      }, TIMEOUT);
     });
   }
 
@@ -91,7 +118,7 @@ export class WatcherService {
         };
         witnessesData.push(_witness);
         return resolve(_witness);
-      }, 4000);
+      }, TIMEOUT);
     });
   }
 
@@ -109,7 +136,7 @@ export class WatcherService {
           };
         }
         return resolve(identifierData);
-      }, 4000);
+      }, TIMEOUT);
     });
   }
 }

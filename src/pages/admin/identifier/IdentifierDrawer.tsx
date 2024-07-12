@@ -1,12 +1,51 @@
-import { Button, Drawer, Checkbox } from "flowbite-react";
+import { useState, useEffect } from "react";
+import { Button, Drawer, Checkbox, Badge } from "flowbite-react";
 import { HiKey } from "react-icons/hi2";
 
 interface IIdentifierDrawer {
   isOpen: boolean;
   handleClose: () => void;
+  identifier?: any;
+  mode?: "create" | "edit";
+  handleSubmit: (data: any) => void;
+  isUpdating: boolean;
 }
 
-export function IdentifierDrawer({ isOpen, handleClose }: IIdentifierDrawer) {
+export function IdentifierDrawer({
+  isOpen,
+  handleClose,
+  identifier,
+  mode = "create",
+  handleSubmit = () => {},
+  isUpdating,
+}: IIdentifierDrawer) {
+  const [alias, setAlias] = useState("");
+  const [prefix, setPrefix] = useState("");
+  const [oobi, setOOBI] = useState("");
+  const [cardano, setCardano] = useState(false);
+  const [watched, setWatched] = useState(false);
+
+  const isEdit = mode === "edit";
+
+  useEffect(() => {
+    if (identifier && isEdit) {
+      setAlias(identifier.alias);
+      setPrefix(identifier.prefix);
+      setOOBI(identifier.oobi);
+      setCardano(identifier.cardano);
+      setWatched(identifier.watched);
+    } else {
+      setAlias("");
+      setPrefix("");
+      setOOBI("");
+      setCardano(false);
+      setWatched(false);
+    }
+  }, [identifier]);
+
+  const onSubmit = () => {
+    handleSubmit({ alias, prefix, cardano, oobi, watched });
+  };
   return (
     <>
       <Drawer
@@ -22,11 +61,16 @@ export function IdentifierDrawer({ isOpen, handleClose }: IIdentifierDrawer) {
                 "mb-4 inline-flex items-center text-base font-semibold text-cardColor",
             },
           }}
-          title="Create AID"
+          title={isEdit ? "Edit AID" : "Create AID"}
           titleIcon={HiKey}
         />
         <Drawer.Items>
           <form action="#">
+            {prefix ? (
+              <Badge className="break-all bg-cardBg text-cardColor border border-cardColor">
+                {prefix}
+              </Badge>
+            ) : null}
             <div className="mb-6 mt-3">
               <label
                 className="mb-2 block text-sm font-medium text-textColor"
@@ -37,26 +81,11 @@ export function IdentifierDrawer({ isOpen, handleClose }: IIdentifierDrawer) {
               <input
                 id="alias"
                 name="alias"
+                value={alias}
                 className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary"
                 placeholder="Enter alias for identifier"
                 type="text"
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                htmlFor="prefix"
-                className="mb-2 block text-sm font-medium text-textColor"
-              >
-                Prefix
-              </label>
-              <input
-                id="prefix"
-                name="prefix"
-                value="BOUZ4v-vPMP5KyZQP-d_8B30UHI4KWgXczBgWcRJnnYd"
-                className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
-                disabled
-                placeholder="Enter prefix"
-                type="text"
+                onChange={(e) => setAlias(e.target.value)}
               />
             </div>
             <div className="mb-6">
@@ -69,13 +98,19 @@ export function IdentifierDrawer({ isOpen, handleClose }: IIdentifierDrawer) {
               <input
                 id="oobi"
                 name="oobi"
+                value={oobi}
                 className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Enter OOBI url"
                 type="text"
+                onChange={(e) => setOOBI(e.target.value)}
               />
             </div>
             <div className="mb-6 flex items-center gap-2">
-              <Checkbox id="watched" />
+              <Checkbox
+                id="watched"
+                checked={watched}
+                onClick={() => setWatched(!watched)}
+              />
               <label
                 className="text-sm font-medium text-textColor"
                 htmlFor="watched"
@@ -84,7 +119,11 @@ export function IdentifierDrawer({ isOpen, handleClose }: IIdentifierDrawer) {
               </label>
             </div>
             <div className="mb-6 flex items-center gap-2">
-              <Checkbox id="cardano" />
+              <Checkbox
+                id="cardano"
+                checked={cardano}
+                onClick={() => setCardano(!cardano)}
+              />
               <label
                 className="text-sm font-medium text-textColor"
                 htmlFor="cardano"
@@ -93,15 +132,22 @@ export function IdentifierDrawer({ isOpen, handleClose }: IIdentifierDrawer) {
               </label>
             </div>
             <div className="mb-6">
-              <Button type="submit" className="w-full">
-                Create
+              <Button
+                type="button"
+                isProcessing={isUpdating}
+                className="w-full"
+                onClick={onSubmit}
+              >
+                {isEdit ? "Update" : "Create"}
               </Button>
             </div>
-            <div className="mb-6">
-              <Button color="red" className="w-full">
-                Delete
-              </Button>
-            </div>
+            {isEdit ? (
+              <div className="mb-6">
+                <Button type="button" color="red" className="w-full">
+                  Delete
+                </Button>
+              </div>
+            ) : null}
           </form>
         </Drawer.Items>
       </Drawer>
