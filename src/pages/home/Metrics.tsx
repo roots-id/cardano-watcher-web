@@ -78,7 +78,7 @@ export function Metrics() {
         />
         <MetricCard
           title="Witness Availability"
-          count={metrics?.witnessesAvailability ?? 0}
+          count={Number((metrics?.witnessesAvailability ?? 0).toFixed(2))}
           progress={
             metrics?.witnessesAvailability
               ? (metrics?.witnessesAvailability / metrics?.witnesses) * 100
@@ -88,7 +88,7 @@ export function Metrics() {
         />
         <MetricCard
           title="Key Events Mean"
-          count={metrics?.keyEventsMean ?? 0}
+          count={Number((metrics?.keyEventsMean ?? 0).toFixed(2))}
           progress={
             metrics?.keyEventsMean
               ? (metrics?.keyEventsMean / metrics?.keyEventsTotal) * 100

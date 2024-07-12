@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { Tabs, Button, Spinner } from "flowbite-react";
+import { Tabs, Spinner } from "flowbite-react";
 import { HiOutlineUserGroup, HiKey } from "react-icons/hi";
 import { watcherService } from "@services/watcher/watcher";
-import { AidDrawer } from "./AidDrawer";
-import { WitnessDrawer } from "./WitnessDrawer";
-import { Identifiers } from "./Identifier";
-import { Witnesses } from "./Witness";
+import { Witness } from "./witness";
+import { Identifier } from "./identifier";
 
 export function Admin() {
   const [activeTab, setActiveTab] = useState(0);
@@ -14,28 +12,25 @@ export function Admin() {
   const [identifiers, setIdentifiers] = useState<unknown>([]);
   const [witnesses, setWitnesses] = useState<unknown>([]);
 
-  const [openAidDrawer, setOpenAidDrawer] = useState(false);
-  const [openWitnessDrawer, setOpenWitnessDrawer] = useState(false);
-
-  const handleCloseAidDrawer = () => {
-    setOpenAidDrawer(false);
-  };
-  const handleCloseWitnessDrawer = () => {
-    setOpenWitnessDrawer(false);
-  };
   const fetchAdminData = async () => {
     if (activeTab === 0) {
-      setIsLoadingWitness(true);
-      const _witnesses = await watcherService.listWitnesses();
-      console.log("witnesses", witnesses);
-      setWitnesses(_witnesses);
-      setIsLoadingWitness(false);
+      await fetchWitnesses();
     } else {
-      setIsLoadingIdentifier(true);
-      const _identifiers = await watcherService.listIdentifiers();
-      setIdentifiers(_identifiers);
-      setIsLoadingIdentifier(false);
+      await fetchIdentifiers();
     }
+  };
+
+  const fetchIdentifiers = async () => {
+    setIsLoadingIdentifier(true);
+    const _identifiers = await watcherService.listIdentifiers();
+    setIdentifiers(_identifiers);
+    setIsLoadingIdentifier(false);
+  };
+  const fetchWitnesses = async () => {
+    setIsLoadingWitness(true);
+    const _witnesses = await watcherService.listWitnesses();
+    setWitnesses(_witnesses);
+    setIsLoadingWitness(false);
   };
 
   useEffect(() => {
@@ -44,7 +39,7 @@ export function Admin() {
 
   return (
     <Tabs
-      aria-label="Default tabs"
+      aria-label="Admin tabs"
       variant="underline"
       onActiveTabChange={setActiveTab}
     >
@@ -53,48 +48,14 @@ export function Admin() {
         title="Witnesses"
         icon={isLoadingWitness ? (Spinner as any) : HiOutlineUserGroup}
       >
-        {isLoadingWitness ? (
-          <div className="flex flex-row justify-center">
-            <Spinner size="xl" />
-          </div>
-        ) : (
-          <>
-            <div className="w-full flex flex-row justify-end p-2">
-              <Button onClick={() => setOpenWitnessDrawer(true)} size="xs">
-                + Add New
-              </Button>
-            </div>
-            <WitnessDrawer
-              isOpen={openWitnessDrawer}
-              handleClose={handleCloseWitnessDrawer}
-            />
-            <Witnesses data={witnesses} />
-          </>
-        )}
+        <Witness isLoading={isLoadingWitness} witnesses={witnesses} onSuccess={fetchWitnesses} />
       </Tabs.Item>
       <Tabs.Item
         active={activeTab === 1}
         title="Identifiers"
         icon={isLoadingIdentifier ? (Spinner as any) : HiKey}
       >
-        {isLoadingIdentifier ? (
-          <div className="flex flex-row justify-center">
-            <Spinner size="xl" />
-          </div>
-        ) : (
-          <>
-            <div className="w-full flex flex-row justify-end p-2">
-              <Button size="xs" onClick={() => setOpenAidDrawer(true)}>
-                + Add New
-              </Button>
-            </div>
-            <AidDrawer
-              isOpen={openAidDrawer}
-              handleClose={handleCloseAidDrawer}
-            />
-            <Identifiers data={identifiers} />
-          </>
-        )}
+        <Identifier isLoading={isLoadingIdentifier} identifiers={identifiers} onSuccess={fetchIdentifiers} />
       </Tabs.Item>
     </Tabs>
   );

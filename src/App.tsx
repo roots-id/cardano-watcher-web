@@ -13,7 +13,7 @@ import {
 import { createClient } from "signify-polaris-web";
 import { Heading } from "@components/typography/Heading";
 import { Home } from "@pages/home";
-import { Admin, LoginPopover, CredPopover } from "@pages/admin";
+import { Admin, LoginPopover, ProfilePopover } from "@pages/admin";
 
 import logo from "@assets/img/rootsid.png";
 import { authProvider } from "./auth";
@@ -112,7 +112,7 @@ function Main() {
                 >
                   Admin
                 </Link>
-                <CredPopover initialOpen prefix={authProvider?.aid} />
+                <ProfilePopover initialOpen prefix={authProvider?.aid} />
               </div>
             ) : (
               <LoginPopover
