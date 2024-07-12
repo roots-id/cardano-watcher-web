@@ -1,12 +1,12 @@
-import { Button, Drawer, Label, Checkbox, TextInput } from "flowbite-react";
+import { Button, Drawer, Checkbox } from "flowbite-react";
 import { HiKey } from "react-icons/hi2";
 
-interface IAidDrawer {
+interface IIdentifierDrawer {
   isOpen: boolean;
   handleClose: () => void;
 }
 
-export function AidDrawer({ isOpen, handleClose }: IAidDrawer) {
+export function IdentifierDrawer({ isOpen, handleClose }: IIdentifierDrawer) {
   return (
     <>
       <Drawer
@@ -102,16 +102,6 @@ export function AidDrawer({ isOpen, handleClose }: IAidDrawer) {
                 Delete
               </Button>
             </div>
-            {/* <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <a href="mailto:info@company.com" className="hover:underline">
-                info@company.com
-              </a>
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              <a href="tel:2124567890" className="hover:underline">
-                212-456-7890
-              </a>
-            </p> */}
           </form>
         </Drawer.Items>
       </Drawer>

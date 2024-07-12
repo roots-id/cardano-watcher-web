@@ -1,7 +1,7 @@
 import { Button, Popover } from "flowbite-react";
 import { HiOutlineCreditCard, HiUserCircle } from "react-icons/hi2";
 
-export function CredPopover({
+export function ProfilePopover({
   initialOpen,
   prefix,
 }: {

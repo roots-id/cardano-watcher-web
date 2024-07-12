@@ -2,16 +2,26 @@ import { Table } from "flowbite-react";
 import { HiCheckCircle } from "react-icons/hi";
 import { IoCloseCircleSharp } from "react-icons/io5";
 
-export function Identifiers({ data }) {
+export function IdentifierTable({ data }) {
   return (
     <div className="overflow-x-auto">
       <Table className="table-fixed bg-cardBg">
         <Table.Head>
-          <Table.HeadCell className="text-cardColor bg-CardBg">Alias</Table.HeadCell>
-          <Table.HeadCell className="text-cardColor bg-CardBg">Prefix</Table.HeadCell>
-          <Table.HeadCell className="text-cardColor bg-CardBg">Cardano</Table.HeadCell>
-          <Table.HeadCell className="text-cardColor bg-CardBg">Watched</Table.HeadCell>
-          <Table.HeadCell className="text-cardColor bg-CardBg">OOBI</Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">
+            Alias
+          </Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">
+            Prefix
+          </Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">
+            Cardano
+          </Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">
+            Watched
+          </Table.HeadCell>
+          <Table.HeadCell className="text-cardColor bg-CardBg">
+            OOBI
+          </Table.HeadCell>
           <Table.HeadCell className="text-cardColor bg-CardBg">
             <span className="sr-only">Edit</span>
           </Table.HeadCell>

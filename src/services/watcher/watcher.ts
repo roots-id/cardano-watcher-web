@@ -19,6 +19,25 @@ export interface IKELDto {
   timestamp: string;
 }
 
+export interface IIdentifierDto {
+  prefix: string;
+  alias: string;
+  cardano: boolean;
+  watched: boolean;
+  oobi: string;
+}
+
+export interface IWitnessDto {
+  prefix: string;
+  alias: string;
+  provider: string;
+  referral: string;
+  oobi: string;
+}
+
+const witnessesData = [...witnessesMock];
+const identifierData = [...identifiersMock];
+
 export class WatcherService {
   async getStats(): Promise<IMetricDto> {
     return new Promise((resolve) => {
@@ -39,7 +58,15 @@ export class WatcherService {
   async listIdentifiers() {
     return new Promise((resolve) => {
       setTimeout(() => {
-        return resolve(identifiersMock);
+        return resolve(identifierData);
+      }, 4000);
+    });
+  }
+
+  async createIdentifier() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        return resolve(identifierData);
       }, 4000);
     });
   }
@@ -47,7 +74,41 @@ export class WatcherService {
   async listWitnesses() {
     return new Promise((resolve) => {
       setTimeout(() => {
-        return resolve(witnessesMock);
+        return resolve(witnessesData);
+      }, 4000);
+    });
+  }
+
+  async createWitness({ alias, oobi, provider, referral }: IWitnessDto) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const _witness = {
+          alias,
+          oobi,
+          provider,
+          referral,
+          prefix: window.crypto.randomUUID(),
+        };
+        witnessesData.push(_witness);
+        return resolve(_witness);
+      }, 4000);
+    });
+  }
+
+  async updateWitness(witness: IWitnessDto) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const _index = witnessesData.findIndex(
+          (wit) => wit.prefix === witness.prefix
+        );
+        if (_index > -1) {
+          witnessesData[_index] = {
+            ...witnessesData[_index],
+            ...witness,
+            prefix: witnessesData[_index].prefix,
+          };
+        }
+        return resolve(identifierData);
       }, 4000);
     });
   }
