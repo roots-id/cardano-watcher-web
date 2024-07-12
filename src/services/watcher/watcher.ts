@@ -36,8 +36,8 @@ export interface IWitnessDto {
 }
 
 const TIMEOUT = 1000;
-const witnessesData = [...witnessesMock];
-const identifierData = [...identifiersMock];
+let witnessesData = [...witnessesMock];
+let identifierData = [...identifiersMock];
 
 export class WatcherService {
   async getStats(): Promise<IMetricDto> {
@@ -98,6 +98,15 @@ export class WatcherService {
     });
   }
 
+  async deleteIdentifier(prefix: string) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        identifierData = identifierData.filter((id) => id.prefix !== prefix);
+        return resolve(identifierData);
+      }, TIMEOUT);
+    });
+  }
+
   async listWitnesses() {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -135,7 +144,16 @@ export class WatcherService {
             prefix: witnessesData[_index].prefix,
           };
         }
-        return resolve(identifierData);
+        return resolve(witnessesData);
+      }, TIMEOUT);
+    });
+  }
+
+  async deleteWitness(prefix: string) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        witnessesData = witnessesData.filter((wit) => wit.prefix !== prefix);
+        return resolve(witnessesData);
       }, TIMEOUT);
     });
   }

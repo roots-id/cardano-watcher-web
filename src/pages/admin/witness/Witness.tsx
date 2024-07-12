@@ -8,7 +8,7 @@ export function Witness({ isLoading, witnesses, onSuccess }) {
   const [openWitnessDrawer, setOpenWitnessDrawer] = useState(false);
   const [selectedWitness, setSelectedWitness] = useState(null);
   const [isUpdatingWitness, setIsUpdatingWitness] = useState(false);
-
+  const [isDeletingWitness, setIsDeletingWitness] = useState(false);
 
   const handleCloseWitnessDrawer = () => {
     setSelectedWitness(null);
@@ -32,6 +32,16 @@ export function Witness({ isLoading, witnesses, onSuccess }) {
     onSuccess();
   };
 
+  const handleDelete = async (item) => {
+    if (item?.prefix) {
+      setIsDeletingWitness(true);
+      await watcherService.deleteWitness(item.prefix);
+      setIsUpdatingWitness(false);
+      handleCloseWitnessDrawer();
+      onSuccess();
+    }
+  };
+
   return isLoading ? (
     <div className="flex flex-row justify-center">
       <Spinner size="xl" />
@@ -49,6 +59,8 @@ export function Witness({ isLoading, witnesses, onSuccess }) {
         witness={selectedWitness}
         mode={selectedWitness ? "edit" : "create"}
         handleSubmit={handleSubmit}
+        handleDelete={handleDelete}
+        isDeleting={isDeletingWitness}
         isUpdating={isUpdatingWitness}
       />
       <WitnessesTable data={witnesses} handleEdit={handleEditWitness} />

@@ -8,7 +8,9 @@ interface IIdentifierDrawer {
   identifier?: any;
   mode?: "create" | "edit";
   handleSubmit: (data: any) => void;
+  handleDelete: (data: any) => void;
   isUpdating: boolean;
+  isDeleting: boolean;
 }
 
 export function IdentifierDrawer({
@@ -18,6 +20,8 @@ export function IdentifierDrawer({
   mode = "create",
   handleSubmit = () => {},
   isUpdating,
+  handleDelete,
+  isDeleting,
 }: IIdentifierDrawer) {
   const [alias, setAlias] = useState("");
   const [prefix, setPrefix] = useState("");
@@ -46,6 +50,13 @@ export function IdentifierDrawer({
   const onSubmit = () => {
     handleSubmit({ alias, prefix, cardano, oobi, watched });
   };
+
+  const onDelete = () => {
+    if (!isUpdating && !isDeleting) {
+      handleDelete({ alias, prefix, cardano, oobi, watched });
+    }
+  };
+
   return (
     <>
       <Drawer
@@ -143,7 +154,13 @@ export function IdentifierDrawer({
             </div>
             {isEdit ? (
               <div className="mb-6">
-                <Button type="button" color="red" className="w-full">
+                <Button
+                  onClick={onDelete}
+                  type="button"
+                  color="red"
+                  className="w-full"
+                  isProcessing={isDeleting}
+                >
                   Delete
                 </Button>
               </div>

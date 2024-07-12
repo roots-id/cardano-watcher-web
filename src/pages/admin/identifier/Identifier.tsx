@@ -8,6 +8,7 @@ export function Identifier({ isLoading, identifiers, onSuccess }) {
   const [openIdentifierDrawer, setOpenIdentifierDrawer] = useState(false);
   const [selectedIdentifier, setSelectedIdentifier] = useState(null);
   const [isUpdatingIdentifier, setIsUpdatingIdentifier] = useState(false);
+  const [isDeletingIdentifier, setIsDeletingIdentifier] = useState(false);
 
   const handleCloseIdentifierDrawer = () => {
     setSelectedIdentifier(null);
@@ -31,6 +32,16 @@ export function Identifier({ isLoading, identifiers, onSuccess }) {
     onSuccess();
   };
 
+  const handleDelete = async (item) => {
+    if (item?.prefix) {
+      setIsDeletingIdentifier(true);
+      await watcherService.deleteIdentifier(item.prefix);
+      setIsUpdatingIdentifier(false);
+      handleCloseIdentifierDrawer();
+      onSuccess();
+    }
+  };
+
   return isLoading ? (
     <div className="flex flex-row justify-center">
       <Spinner size="xl" />
@@ -48,6 +59,8 @@ export function Identifier({ isLoading, identifiers, onSuccess }) {
         identifier={selectedIdentifier}
         mode={selectedIdentifier ? "edit" : "create"}
         handleSubmit={handleSubmit}
+        handleDelete={handleDelete}
+        isDeleting={isDeletingIdentifier}
         isUpdating={isUpdatingIdentifier}
       />
       <IdentifierTable data={identifiers} handleEdit={handleEditIdentifier} />

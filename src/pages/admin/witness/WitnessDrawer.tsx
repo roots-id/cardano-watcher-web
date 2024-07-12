@@ -8,7 +8,9 @@ interface IWitnessDrawer {
   witness?: any;
   mode?: "create" | "edit";
   handleSubmit: (data: any) => void;
+  handleDelete: (data: any) => void;
   isUpdating: boolean;
+  isDeleting: boolean;
 }
 
 export function WitnessDrawer({
@@ -18,6 +20,8 @@ export function WitnessDrawer({
   mode = "create",
   handleSubmit = () => {},
   isUpdating,
+  handleDelete,
+  isDeleting,
 }: IWitnessDrawer) {
   const [alias, setAlias] = useState("");
   const [prefix, setPrefix] = useState("");
@@ -45,6 +49,12 @@ export function WitnessDrawer({
 
   const onSubmit = () => {
     handleSubmit({ alias, prefix, provider, oobi, referral });
+  };
+
+  const onDelete = () => {
+    if (!isUpdating && !isDeleting) {
+      handleDelete({ alias, prefix, provider, oobi, referral });
+    }
   };
 
   return (
@@ -153,7 +163,13 @@ export function WitnessDrawer({
             </div>
             {isEdit ? (
               <div className="mb-6">
-                <Button type="button" color="red" className="w-full">
+                <Button
+                  onClick={onDelete}
+                  type="button"
+                  color="red"
+                  className="w-full"
+                  isProcessing={isDeleting}
+                >
                   Delete
                 </Button>
               </div>
