@@ -29,6 +29,9 @@ export function IdentifierDrawer({
   const [cardano, setCardano] = useState(false);
   const [watched, setWatched] = useState(false);
 
+  const [aliasError, setAliasError] = useState("");
+  const [oobiError, setOOBIError] = useState("");
+
   const isEdit = mode === "edit";
 
   useEffect(() => {
@@ -45,9 +48,31 @@ export function IdentifierDrawer({
       setCardano(false);
       setWatched(false);
     }
+    setAliasError("");
+    setOOBIError("");
   }, [identifier]);
 
+  const validate = () => {
+    let hasError = false;
+    if (!alias) {
+      setAliasError("Alias is required");
+      hasError = true;
+    } else {
+      setAliasError("");
+    }
+    if (!oobi) {
+      setOOBIError("OOBI is required");
+      hasError = true;
+    } else {
+      setOOBIError("");
+    }
+    return hasError;
+  };
+
   const onSubmit = () => {
+    if (validate()) {
+      return;
+    }
     handleSubmit({ alias, prefix, cardano, oobi, watched });
   };
 
@@ -64,6 +89,7 @@ export function IdentifierDrawer({
         open={isOpen}
         onClose={handleClose}
         position="right"
+        backdrop={false}
       >
         <Drawer.Header
           theme={{
@@ -96,8 +122,14 @@ export function IdentifierDrawer({
                 className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary"
                 placeholder="Enter alias for identifier"
                 type="text"
-                onChange={(e) => setAlias(e.target.value)}
+                onChange={(e) => {
+                  setAlias(e.target.value);
+                  setAliasError("");
+                }}
               />
+              {aliasError ? (
+                <p className="text-red-500 text-xs mt-1">{aliasError}</p>
+              ) : null}
             </div>
             <div className="mb-6">
               <label
@@ -113,8 +145,14 @@ export function IdentifierDrawer({
                 className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Enter OOBI url"
                 type="text"
-                onChange={(e) => setOOBI(e.target.value)}
+                onChange={(e) => {
+                  setOOBI(e.target.value);
+                  setOOBIError("");
+                }}
               />
+              {oobiError ? (
+                <p className="text-red-500 text-xs mt-1">{oobiError}</p>
+              ) : null}
             </div>
             <div className="mb-6 flex items-center gap-2">
               <Checkbox
