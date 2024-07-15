@@ -29,6 +29,11 @@ export function WitnessDrawer({
   const [provider, setProvider] = useState("");
   const [referral, setReferral] = useState("");
 
+  const [aliasError, setAliasError] = useState("");
+  const [oobiError, setOOBIError] = useState("");
+  const [providerError, setProviderError] = useState("");
+  const [referralError, setReferralError] = useState("");
+
   const isEdit = mode === "edit";
 
   useEffect(() => {
@@ -45,9 +50,29 @@ export function WitnessDrawer({
       setProvider("");
       setReferral("");
     }
+    setAliasError("");
+    setOOBIError("");
+    setProviderError("");
+    setReferralError("");
   }, [witness]);
 
+  const validate = () => {
+    let hasError = false;
+    if (!alias || !oobi || !provider || !referral) {
+      setAliasError(alias ? "" : "Alias is required");
+      setOOBIError(oobi ? "" : "OOBI is required");
+      setProviderError(provider ? "" : "Provider is required");
+      setReferralError(referral ? "" : "Referral is required");
+      hasError = true;
+    }
+
+    return hasError;
+  };
+
   const onSubmit = () => {
+    if (validate()) {
+      return;
+    }
     handleSubmit({ alias, prefix, provider, oobi, referral });
   };
 
@@ -97,8 +122,14 @@ export function WitnessDrawer({
                 className="text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary focus:outline-none focus:ring-0"
                 placeholder="Enter alias for witness"
                 type="text"
-                onChange={(e) => setAlias(e.target.value)}
+                onChange={(e) => {
+                  setAlias(e.target.value);
+                  setAliasError("");
+                }}
               />
+              {aliasError ? (
+                <p className="text-red-500 text-xs mt-1">{aliasError}</p>
+              ) : null}
             </div>
             <div className="mb-6">
               <label
@@ -114,8 +145,14 @@ export function WitnessDrawer({
                 className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Enter OOBI url"
                 type="text"
-                onChange={(e) => setOOBI(e.target.value)}
+                onChange={(e) => {
+                  setOOBI(e.target.value);
+                  setOOBIError("");
+                }}
               />
+              {oobiError ? (
+                <p className="text-red-500 text-xs mt-1">{oobiError}</p>
+              ) : null}
             </div>
             <div className="mb-6">
               <label
@@ -131,8 +168,14 @@ export function WitnessDrawer({
                 className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Enter provider name"
                 type="text"
-                onChange={(e) => setProvider(e.target.value)}
+                onChange={(e) => {
+                  setProvider(e.target.value);
+                  setProviderError("");
+                }}
               />
+              {providerError ? (
+                <p className="text-red-500 text-xs mt-1">{providerError}</p>
+              ) : null}
             </div>
             <div className="mb-6">
               <label
@@ -148,8 +191,14 @@ export function WitnessDrawer({
                 className="focus:outline-none focus:ring-0 text-textColor border w-full rounded border-cardColor bg-cardBg focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="Has anyone referred you?"
                 type="text"
-                onChange={(e) => setReferral(e.target.value)}
+                onChange={(e) => {
+                  setReferral(e.target.value);
+                  setReferralError("");
+                }}
               />
+              {referralError ? (
+                <p className="text-red-500 text-xs mt-1">{referralError}</p>
+              ) : null}
             </div>
             <div className="mb-6">
               <Button
