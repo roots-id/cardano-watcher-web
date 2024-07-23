@@ -89,7 +89,7 @@ export class WatcherService {
 
   async updateIdentifier(identifier: IIdentifierDto) {
     const body = JSON.stringify(identifier);
-    const url = MAIN_URL + `/aids/${identifier.prefix}`;
+    const url = MAIN_URL + "/aids";
     const method = "POST";
     const headers = { "Content-Type": "application/json" };
     const signedReq = await signifyClient.signRequest({ url, method });
