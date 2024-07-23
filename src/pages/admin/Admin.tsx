@@ -4,6 +4,7 @@ import { HiOutlineUserGroup, HiKey } from "react-icons/hi";
 import { watcherService } from "@services/watcher/watcher";
 import { Witness } from "./witness";
 import { Identifier } from "./identifier";
+import toast from "react-hot-toast";
 
 export function Admin() {
   const [activeTab, setActiveTab] = useState(0);
@@ -22,14 +23,22 @@ export function Admin() {
 
   const fetchIdentifiers = async () => {
     setIsLoadingIdentifier(true);
-    const _identifiers = await watcherService.listIdentifiers();
-    setIdentifiers(_identifiers);
+    try {
+      const _identifiers = await watcherService.listIdentifiers();
+      setIdentifiers(_identifiers);
+    } catch (error) {
+      toast.error(error?.message);
+    }
     setIsLoadingIdentifier(false);
   };
   const fetchWitnesses = async () => {
     setIsLoadingWitness(true);
-    const _witnesses = await watcherService.listWitnesses();
-    setWitnesses(_witnesses);
+    try {
+      const _witnesses = await watcherService.listWitnesses();
+      setWitnesses(_witnesses);
+    } catch (error) {
+      toast.error(error?.message);
+    }
     setIsLoadingWitness(false);
   };
 
@@ -48,14 +57,22 @@ export function Admin() {
         title="Witnesses"
         icon={isLoadingWitness ? (Spinner as any) : HiOutlineUserGroup}
       >
-        <Witness isLoading={isLoadingWitness} witnesses={witnesses} onSuccess={fetchWitnesses} />
+        <Witness
+          isLoading={isLoadingWitness}
+          witnesses={witnesses}
+          onSuccess={fetchWitnesses}
+        />
       </Tabs.Item>
       <Tabs.Item
         active={activeTab === 1}
         title="Identifiers"
         icon={isLoadingIdentifier ? (Spinner as any) : HiKey}
       >
-        <Identifier isLoading={isLoadingIdentifier} identifiers={identifiers} onSuccess={fetchIdentifiers} />
+        <Identifier
+          isLoading={isLoadingIdentifier}
+          identifiers={identifiers}
+          onSuccess={fetchIdentifiers}
+        />
       </Tabs.Item>
     </Tabs>
   );

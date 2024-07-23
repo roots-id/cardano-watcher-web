@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { LoaderFunctionArgs } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import {
   Link,
   Outlet,
@@ -61,7 +62,22 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />
+    <>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            borderRadius: "10px",
+            background: "#380c41",
+            color: "#FFC197",
+          },
+        }}
+      />
+      <RouterProvider
+        router={router}
+        fallbackElement={<p>Initial Load...</p>}
+      />
+    </>
   );
 }
 

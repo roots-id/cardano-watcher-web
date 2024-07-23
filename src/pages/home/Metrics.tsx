@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Progress, Spinner } from "flowbite-react";
 import { watcherService, IMetricDto } from "@services/watcher/watcher";
+import toast from "react-hot-toast";
 
 interface IMetricCard {
   title: string;
@@ -33,10 +34,14 @@ export function Metrics() {
   const [metrics, setMetrics] = useState<IMetricDto | null>(null);
 
   const fetchMetrics = async () => {
-    const _metrics = await watcherService.getStats();
-    setIsLoading(false);
-    setMetrics(_metrics);
-    console.log(metrics);
+    try {
+      const _metrics = await watcherService.getStats();
+      setMetrics(_metrics);
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
