@@ -35,6 +35,11 @@ export interface IWitnessDto {
 
 const MAIN_URL = "https://cardano-watcher-api.rootsid.cloud";
 
+export const extractPrefix = (oobi: string) => {
+  // <anything>/<anything>/"oobi"/<prefix>/<anything>
+  return oobi?.split("oobi/")?.[1]?.split("/")?.[0];
+};
+
 export class WatcherService {
   async getStats(): Promise<IMetricDto> {
     const resp = await fetch(MAIN_URL + "/stats");
@@ -64,7 +69,7 @@ export class WatcherService {
   }
 
   async createIdentifier({ alias, watched, cardano, oobi }: IIdentifierDto) {
-    const prefix = oobi.split("/")[4]; // anything/anything/"oobi"/<prefix>/anything
+    const prefix = extractPrefix(oobi);
     const _identifier = {
       alias: alias,
       prefix: prefix,
@@ -124,7 +129,7 @@ export class WatcherService {
   }
 
   async createWitness({ alias, oobi, provider, referral }: IWitnessDto) {
-    const prefix = oobi.split("/")[4];
+    const prefix = extractPrefix(oobi);
     const _witness = {
       alias: alias,
       prefix: prefix,
