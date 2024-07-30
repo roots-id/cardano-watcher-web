@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Drawer, Checkbox, Badge } from "flowbite-react";
 import { HiKey } from "react-icons/hi2";
+import { extractPrefix } from "@services/watcher/watcher";
 
 interface IIdentifierDrawer {
   isOpen: boolean;
@@ -52,6 +53,24 @@ export function IdentifierDrawer({
     setOOBIError("");
   }, [identifier]);
 
+  const validateOOBI = () => {
+    let hasError = false;
+    if (!oobi) {
+      setOOBIError("OOBI is required");
+      hasError = true;
+    } else if (!isEdit && oobi) {
+      const _prefix = extractPrefix(oobi);
+      if (_prefix) {
+        setPrefix(_prefix);
+        setOOBIError("");
+      } else {
+        setOOBIError("OOBI must contain prefix");
+        hasError = true;
+      }
+    }
+    return hasError;
+  };
+
   const validate = () => {
     let hasError = false;
     if (!alias) {
@@ -60,12 +79,9 @@ export function IdentifierDrawer({
     } else {
       setAliasError("");
     }
-    if (!oobi) {
-      setOOBIError("OOBI is required");
-      hasError = true;
-    } else {
-      setOOBIError("");
-    }
+    
+    hasError = hasError || validateOOBI();
+
     return hasError;
   };
 
@@ -149,6 +165,7 @@ export function IdentifierDrawer({
                   setOOBI(e.target.value);
                   setOOBIError("");
                 }}
+                onBlur={validateOOBI}
               />
               {oobiError ? (
                 <p className="text-red-500 text-xs mt-1">{oobiError}</p>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Drawer, Badge } from "flowbite-react";
 import { HiOutlineUserGroup } from "react-icons/hi2";
+import { extractPrefix } from "@services/watcher/watcher";
 
 interface IWitnessDrawer {
   isOpen: boolean;
@@ -56,15 +57,34 @@ export function WitnessDrawer({
     setReferralError("");
   }, [witness]);
 
+  const validateOOBI = () => {
+    let hasError = false;
+    if (!oobi) {
+      setOOBIError("OOBI is required");
+      hasError = true;
+    } else if (!isEdit && oobi) {
+      const _prefix = extractPrefix(oobi);
+      if (_prefix) {
+        setPrefix(_prefix);
+        setOOBIError("");
+      } else {
+        setOOBIError("OOBI must contain prefix");
+        hasError = true;
+      }
+    }
+    return hasError;
+  };
+
   const validate = () => {
     let hasError = false;
-    if (!alias || !oobi || !provider || !referral) {
+    if (!alias || !provider || !referral) {
       setAliasError(alias ? "" : "Alias is required");
-      setOOBIError(oobi ? "" : "OOBI is required");
       setProviderError(provider ? "" : "Provider is required");
       setReferralError(referral ? "" : "Referral is required");
       hasError = true;
     }
+
+    hasError = hasError || validateOOBI();
 
     return hasError;
   };
@@ -149,6 +169,7 @@ export function WitnessDrawer({
                   setOOBI(e.target.value);
                   setOOBIError("");
                 }}
+                onBlur={validateOOBI}
               />
               {oobiError ? (
                 <p className="text-red-500 text-xs mt-1">{oobiError}</p>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Card } from "flowbite-react";
 import { watcherService, IKELDto } from "@services/watcher/watcher";
+import toast from "react-hot-toast";
 import { DecodedKEL } from "./DecodedKEL";
 
 export function KELQuery() {
@@ -25,10 +26,18 @@ export function KELQuery() {
 
   const queryKEL = async () => {
     setIsLoading(true);
-    const _resp = await watcherService.getKEL(prefix);
-    console.log("resp", _resp);
-    setKelReports(_resp);
-    setIsLoading(false);
+
+    try {
+      const _resp = await watcherService.getKEL(prefix);
+      setKelReports(_resp);
+      if (_resp.length === 0) {
+        toast.success("No KEL found for this prefix.");
+      }
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleURIKeyPress = (e) => {
@@ -51,17 +60,16 @@ export function KELQuery() {
             onKeyUp={handleURIKeyPress}
           />
         </div>
-        <Button
-          isProcessing={isLoading}
-          name="fetch"
-          onClick={queryKEL}
-        >
+        <Button isProcessing={isLoading} name="fetch" onClick={queryKEL}>
           {isLoading ? "..." : "Query"}
         </Button>
       </div>
       <div>
         {kelReports.map((report, idx) => (
-          <Card className="bg-cardBg hover:bg-cardBg text-cardColor border-cardColor my-4" key={idx} >
+          <Card
+            className="bg-cardBg hover:bg-cardBg text-cardColor border-cardColor my-4"
+            key={idx}
+          >
             <DecodedKEL kel={report.kel} />
           </Card>
         ))}
